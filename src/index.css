@@ -2,17 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* ================================
+   Design System - Monitoramento TV
+   Todas as cores são definidas em HSL
+================================= */
 
 @layer base {
   :root {
-    /* Sistema de cores para monitoramento de TV */
+    /* Sistema de cores */
     --background: 220 26% 6%;
     --foreground: 210 40% 95%;
     
-    /* Cores de broadcast profissionais */
+    /* Cores de broadcast */
     --broadcast-primary: 220 100% 45%;
     --broadcast-primary-glow: 220 100% 65%;
     --broadcast-secondary: 220 26% 12%;
@@ -24,20 +25,20 @@ All colors MUST be HSL.
     --nivel-a: 25 95% 53%;  /* Laranja - Grave */
     --nivel-x: 0 84% 60%;   /* Vermelho - Gravíssimo */
     
-    /* Gradientes profissionais */
+    /* Gradientes */
     --gradient-broadcast: linear-gradient(135deg, hsl(var(--broadcast-primary)), hsl(var(--broadcast-primary-glow)));
     --gradient-surface: linear-gradient(180deg, hsl(var(--broadcast-secondary)), hsl(var(--broadcast-accent)));
     --gradient-alert: linear-gradient(135deg, hsl(var(--nivel-a)), hsl(var(--nivel-x)));
     
-    /* Sombras com glow de broadcast */
+    /* Sombras */
     --shadow-broadcast: 0 10px 30px -10px hsl(var(--broadcast-primary) / 0.3);
     --shadow-glow: 0 0 40px hsl(var(--broadcast-primary-glow) / 0.2);
     --shadow-surface: 0 4px 20px -4px hsl(220 26% 4% / 0.4);
     
-    /* Transições suaves */
+    /* Transições */
     --transition-broadcast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Tokens do sistema principal adaptados */
+    /* Tokens do sistema */
     --card: 220 26% 12%;
     --card-foreground: 210 40% 95%;
 
@@ -65,23 +66,18 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  /* Modo escuro */
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -110,6 +106,7 @@ All colors MUST be HSL.
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -127,6 +124,6 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
   }
 }

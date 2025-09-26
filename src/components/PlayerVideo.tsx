@@ -3,9 +3,19 @@ import { Play, Pause, Volume2, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
+// Definição da ocorrência
+interface Ocorrencia {
+  id: string;
+  tipo: 'tela_escura' | 'freeze' | 'lipsync' | 'corte';
+  nivel: 'C' | 'B' | 'A' | 'X';
+  timestamp: string;
+  duracao: number;
+  validada: boolean | null; // null = não analisada, true = confirmada, false = falso positivo
+}
+
 interface PlayerVideoProps {
   linkSrt?: string;
-  aoDetectarOcorrencia?: (ocorrencia: any) => void;
+  aoDetectarOcorrencia?: (ocorrencia: Ocorrencia) => void;
 }
 
 const PlayerVideo: React.FC<PlayerVideoProps> = ({ 
@@ -22,7 +32,9 @@ const PlayerVideo: React.FC<PlayerVideoProps> = ({
       if (reproduzindo) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(() => {
+          // evita erro em navegadores que bloqueiam autoplay
+        });
       }
       setReproduzindo(!reproduzindo);
     }
@@ -31,18 +43,17 @@ const PlayerVideo: React.FC<PlayerVideoProps> = ({
   // Simulação de detecção de IA (será substituído por integração real)
   useEffect(() => {
     const intervalo = setInterval(() => {
-      // Simula detecção aleatória de ocorrências para demonstração
-      if (Math.random() < 0.1 && aoDetectarOcorrencia) { // 10% chance por segundo
-        const tiposOcorrencia = ['tela_escura', 'freeze', 'lipsync', 'corte'];
-        const niveis = ['C', 'B', 'A', 'X'];
+      if (Math.random() < 0.1 && aoDetectarOcorrencia) {
+        const tiposOcorrencia: Ocorrencia['tipo'][] = ['tela_escura', 'freeze', 'lipsync', 'corte'];
+        const niveis: Ocorrencia['nivel'][] = ['C', 'B', 'A', 'X'];
         
-        const ocorrencia = {
+        const ocorrencia: Ocorrencia = {
           id: Date.now().toString(),
           tipo: tiposOcorrencia[Math.floor(Math.random() * tiposOcorrencia.length)],
           nivel: niveis[Math.floor(Math.random() * niveis.length)],
           timestamp: new Date().toISOString(),
           duracao: Math.floor(Math.random() * 30) + 1,
-          validada: null // null = não analisada, true = confirmada, false = falso positivo
+          validada: null
         };
         
         aoDetectarOcorrencia(ocorrencia);
